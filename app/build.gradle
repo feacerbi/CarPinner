@@ -71,6 +71,7 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
 
     // Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
@@ -85,7 +86,7 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin"
 
     // Mockk
-    implementation "io.mockk:mockk:$mockkVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
 
     // MockWebServer
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServer"
@@ -99,7 +100,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$gson"
 
     // Tests
-    testImplementation "junit:junit:$junit"
+//    testImplementation "junit:junit:$junit"
+    testImplementation "androidx.test.ext:junit:$junitExt"
     androidTestImplementation "androidx.test.ext:junit:$junitExt"
     androidTestImplementation "androidx.test:runner:$test"
     androidTestImplementation "androidx.test:rules:$test"

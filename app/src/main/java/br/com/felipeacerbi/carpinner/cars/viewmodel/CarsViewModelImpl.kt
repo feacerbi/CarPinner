@@ -8,9 +8,8 @@ import androidx.test.espresso.idling.CountingIdlingResource
 import br.com.felipeacerbi.carpinner.cars.repository.CarsRepository
 import br.com.felipeacerbi.carpinner.cars.viewmodel.CarsViewModel.Action
 import br.com.felipeacerbi.carpinner.cars.viewstate.CarsViewState
-import br.com.felipeacerbi.carpinner.cars.viewstate.CarsViewStateReducer
 import br.com.felipeacerbi.carpinner.cars.viewstate.CarsViewStateReducer.ShowData
-import br.com.felipeacerbi.carpinner.cars.viewstate.CarsViewStateReducer.ShowLoading
+import br.com.felipeacerbi.carpinner.cars.viewstate.CarsViewStateReducer.ShowError
 import br.com.felipeacerbi.common.dispatcher.CoroutineDispatchers
 import br.com.felipeacerbi.common.extension.launchSafely
 import br.com.felipeacerbi.common.extension.update
@@ -24,7 +23,9 @@ class CarsViewModelImpl(
 ) : ViewModel(), CarsViewModel, CoroutineScope {
 
     private val state: MutableLiveData<CarsViewState> = MutableLiveData(CarsViewState())
-    private val idlingResource = CountingIdlingResource(REQUEST_LIST_IDLING_RESOURCE)
+
+    @VisibleForTesting
+    val idlingResource by lazy { CountingIdlingResource(REQUEST_LIST_IDLING_RESOURCE) }
 
     override fun getStateStream(): MutableLiveData<CarsViewState> = state
 
@@ -35,22 +36,17 @@ class CarsViewModelImpl(
     }
 
     private fun requestCars() {
-        state.update(ShowLoading)
-
         launchSafely(idlingResource, ::showError) {
             state.update(ShowData(withContext(dispatchers.io()) { repository.requestCars() }))
         }
     }
 
     private fun showError(exception: Exception) {
-        state.update(CarsViewStateReducer.ShowError(exception))
+        state.update(ShowError(exception))
     }
 
     override val coroutineContext: CoroutineContext
         get() = viewModelScope.coroutineContext + dispatchers.main()
-
-    @VisibleForTesting
-    fun getIdlingResource() = idlingResource
 
     companion object {
         const val REQUEST_LIST_IDLING_RESOURCE = "REQUEST_LIST_IDLING_RESOURCE"

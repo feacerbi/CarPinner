@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import br.com.felipeacerbi.carpinner.R
@@ -21,8 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import kotlinx.android.synthetic.main.bottom_sheet_cars_list.*
 import kotlinx.android.synthetic.main.fragment_cars.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -65,6 +66,7 @@ class CarsFragment : Fragment(), OnMapReadyCallback {
             rv_cars_list.adapter = CarsListAdapter(it.carsList.toMutableList()) { car ->
                 handleCarClick(car)
             }
+            handleError(it.showError, it.errorMessage)
         }
 
         carsViewModel.perform(RequestCars)
@@ -101,18 +103,17 @@ class CarsFragment : Fragment(), OnMapReadyCallback {
         moveCamera(car.latitude, car.longitude, DEFAULT_ZOOM)
     }
 
+    private fun handleError(show: Boolean, message: String) {
+        if (show) Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun setUpBottomSheet() {
-        bottomSheetList = BottomSheetBehavior.from(bottom_sheet_list).apply {
+        bottomSheetList = from(bottom_sheet_list).apply {
             setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(view: View, p1: Float) {}
                 override fun onStateChanged(view: View, state: Int) {
-                    if (state != STATE_DRAGGING) {
-                        tv_header_subtitle.text = getString(
-                            if (state == STATE_COLLAPSED)
-                                R.string.swipe_up_to_reveal else
-                                R.string.swipe_down_to_collapse
-                        )
-                    }
+                    if (state == STATE_COLLAPSED) tv_header_subtitle.text = getString(R.string.swipe_up_to_reveal)
+                    if (state == STATE_EXPANDED) tv_header_subtitle.text = getString(R.string.swipe_down_to_collapse)
                 }
             })
         }
@@ -122,6 +123,9 @@ class CarsFragment : Fragment(), OnMapReadyCallback {
         maps.moveCamera(CameraUpdateFactory.zoomTo(zoom))
         maps.animateCamera(CameraUpdateFactory.newLatLng(LatLng(lat, long)))
     }
+
+    @VisibleForTesting
+    fun getIdlingResource() = carsViewModel.idlingResource
 
     companion object {
         const val DEFAULT_LAT = 0.0

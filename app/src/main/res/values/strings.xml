@@ -13,4 +13,8 @@
     <string name="transmission_title">Transmission</string>
     <string name="swipe_up_to_reveal">Swipe up to reveal</string>
     <string name="swipe_down_to_collapse">Swipe down to collapse</string>
+    <string name="propane">Propane</string>
+    <string name="ethanol">Ethanol</string>
+    <string name="diesel">Diesel</string>
+    <string name="unknown">Unknown</string>
 </resources>

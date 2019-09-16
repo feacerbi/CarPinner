@@ -36,11 +36,18 @@ class CarsListAdapter(
                 tv_car_licence.text = car.licensePlate
                 tv_car_model.text = car.modelName
                 tv_car_color.text = car.color.clean()
-                tv_car_transmission.text = if (car.transmission == "A") 
-                    context.getString(R.string.auto_transmission) else
-                    context.getString(R.string.manual_transmission)
+                tv_car_transmission.text = when (car.transmission) {
+                    "A" -> context.getString(R.string.auto_transmission)
+                    "M" -> context.getString(R.string.manual_transmission)
+                    else -> context.getString(R.string.unknown)
+                }
                 tv_car_cleanliness.text = car.innerCleanliness.clean()
-                tv_car_fuel.text = car.fuelType
+                tv_car_fuel.text = when (car.fuelType) {
+                    "P" -> context.getString(R.string.propane)
+                    "E" -> context.getString(R.string.ethanol)
+                    "D" -> context.getString(R.string.diesel)
+                    else -> context.getString(R.string.unknown)
+                }
                 tv_car_fuel_level.text = (car.fuelLevel * 100).toPercentFormat(removeZeros = true)
                 itemView.setOnClickListener { onClick.invoke(car) }
             }
