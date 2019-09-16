@@ -53,14 +53,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation "androidx.appcompat:appcompat:$appcompat"
+    implementation "androidx.core:core-ktx:$fragment"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint"
     implementation "androidx.fragment:fragment-ktx:$fragment"
+    implementation "com.google.android.gms:play-services-maps:$gms"
 
     // AAC
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.legacy:legacy-support-v4:$legacy"
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle"
     testImplementation "androidx.arch.core:core-testing:$archTest"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
@@ -98,7 +99,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$gson"
 
     // Tests
-    testImplementation 'junit:junit:4.13-beta-3'
+    testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$junitExt"
     androidTestImplementation "androidx.test:runner:$test"
     androidTestImplementation "androidx.test:rules:$test"

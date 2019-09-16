@@ -3,20 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/carsFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="br.com.felipeacerbi.carpinner.splash.view.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_carsFragment"
+            app:destination="@id/carsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/nav_graph" />
+    </fragment>
 
     <fragment
         android:id="@+id/carsFragment"
         android:name="br.com.felipeacerbi.carpinner.cars.view.CarsFragment"
-        android:label="CarsFragment" >
-        <action
-            android:id="@+id/action_carsFragment_to_splashFragment"
-            app:destination="@id/splashFragment" />
-    </fragment>
+        android:label="CarsFragment" />
 </navigation>

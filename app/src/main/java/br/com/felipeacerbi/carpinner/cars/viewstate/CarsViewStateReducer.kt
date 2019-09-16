@@ -20,6 +20,7 @@ sealed class CarsViewStateReducer : ViewStateReducer<CarsViewState> {
         override val updateView: CarsViewState.() -> Unit = {
             showLoading = false
             carsList = list
+            moveCamera = true
         }
     }
 }

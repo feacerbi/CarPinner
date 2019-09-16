@@ -18,6 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="@dimen/splash_padding"
         android:contentDescription="@string/splash_logo_content_description"
+        android:transitionName="logo"
+        android:scaleType="centerInside"
         android:src="@drawable/sixt_splash_logo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import br.com.felipeacerbi.carpinner.R
+import kotlinx.android.synthetic.main.fragment_splash.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -24,8 +26,22 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            delay(2000)
-            findNavController().popBackStack()
+            delay(SPLASH_TIME)
+
+            goToCarsMap()
         }
+    }
+
+    private fun goToCarsMap() {
+        findNavController().navigate(R.id.action_splashFragment_to_carsFragment, null, null,
+            FragmentNavigatorExtras(
+                iv_logo_icon to TRANSITION_NAME
+            )
+        )
+    }
+
+    companion object {
+        const val SPLASH_TIME = 2000L
+        const val TRANSITION_NAME = "logo"
     }
 }

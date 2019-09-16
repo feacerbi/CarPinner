@@ -7,5 +7,7 @@ data class CarsViewState(
     var showLoading: Boolean = false,
     var showError: Boolean = false,
     var errorMessage: String = "",
-    var carsList: List<Car> = listOf()
+    var carsList: List<Car> = listOf(),
+    var moveCamera: Boolean = false
+
 ) : ViewState
