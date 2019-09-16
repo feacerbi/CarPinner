@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">CarPinner</string>
     <string name="splash_logo_content_description">Sixt logo</string>
     <string name="title_activity_maps">Map</string>
     <string name="list_snippet">%s • %s</string>
